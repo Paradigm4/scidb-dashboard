@@ -1,0 +1,31 @@
+library(shiny)
+
+arrayList <- function() {
+library(scidb)
+scidbconnect()
+arrayList = scidbls()
+notR_arrays = !(grepl("R_array+", arrayList, perl=TRUE))
+arrayList[notR_arrays]}
+
+# Define UI for application that draws a histogram
+shinyUI(fluidPage(
+  
+  # Application title
+  titlePanel("SciDB array dashboard"),
+  
+  # Sidebar with a slider input for the number of bins
+  sidebarLayout(
+    # Show a plot of the generated distribution
+    sidebarPanel(
+      selectInput("dataset", "Choose a SciDB array:", 
+                  choices = arrayList()),
+      helpText("Plot shows distribution of array over SciDB instances", 
+               "Count is scaled w.r.t. minimum",
+               "(unless minimum is zero)")
+    ),
+    mainPanel(
+      verbatimTextOutput("summary"),
+      plotOutput("distPlot")
+    )
+  )
+))
