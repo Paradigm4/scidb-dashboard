@@ -17,14 +17,17 @@ shinyUI(fluidPage(
   sidebarLayout(
     # Show a plot of the generated distribution
     sidebarPanel(
-      selectInput("dataset", "Choose a SciDB array:", 
+      selectInput("array1", "Choose a SciDB array:", 
+                  choices = arrayList()),
+      checkboxInput("chooseSecondArray", "Compare with another array", FALSE),
+      selectInput("array2", "Compare with another SciDB array:", 
                   choices = arrayList()),
       helpText("Plot shows distribution of array over SciDB instances", 
                "Count is scaled w.r.t. minimum",
                "(unless minimum is zero)")
     ),
     mainPanel(
-      verbatimTextOutput("summary"),
+      # verbatimTextOutput("summary"),
       plotOutput("distPlot")
     )
   )
