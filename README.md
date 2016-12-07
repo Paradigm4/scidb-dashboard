@@ -10,32 +10,31 @@ The dashboard allows the end-user to visualize the distribution through a simple
 Image below shows the distribution of a SciDB array that is resident on only one instance (!). All other instances have a count of zero. 
 **PS**: No harm done here, this is probably a small array.
 
-<img src="https://cloud.githubusercontent.com/assets/13973052/20936342/4732fb0e-bbb0-11e6-8e83-4e2cbc590dec.png" width="600" border="2">
+<img src="https://cloud.githubusercontent.com/assets/13973052/20946265/0cc39fdc-bbd8-11e6-9dce-ac5b2a362c18.png" width="600" border="2">
 
 ## Step 2
 
-Next, the user can select (via a drop-down) any array that is available on SciDB (script currently removes temporary arrays created by SciDB-R). 
-
-<img src="https://cloud.githubusercontent.com/assets/13973052/20936350/4e64bae8-bbb0-11e6-867c-e6e611d257bb.png" width="600" border="2">
-
-## Step 3
-
 Let us look at an important array -- the genotype array for variant data from the 1000 genomes project
 
-<img src="https://cloud.githubusercontent.com/assets/13973052/20936359/535c566e-bbb0-11e6-94c7-9f7f503ee3ae.png" width="600" border="2">
+<img src="https://cloud.githubusercontent.com/assets/13973052/20946277/18c5ef38-bbd8-11e6-8abd-28828db75612.png" width="600" border="2">
 
 Note that the count is scaled to the minimum in this case. 
 
 Looks like the data skew is 2x! We can do much better.
 
-## 4
+## Step 3
 
 Now, the same data but arranged via a different schema. 
 
-<img src="https://cloud.githubusercontent.com/assets/13973052/20936601/2fd295a4-bbb1-11e6-8ead-501cf6bb4a22.png" width="600" border="2">
+<img src="https://cloud.githubusercontent.com/assets/13973052/20946299/27f25a46-bbd8-11e6-8ff7-cd7f05ab363e.png" width="600" border="2">
 
-This time, the data skew is just 1.01x. That is much better. 
+This time, the data skew is much much better. 
 
+## Step 4
+
+We can also compare the two schema:
+
+<img src="https://cloud.githubusercontent.com/assets/13973052/20946311/31a846ae-bbd8-11e6-8870-0c5ecd915c03.png" width="600" border="2">
 
 
 
