@@ -43,6 +43,9 @@ shinyServer(function(input, output) {
     input$array1
   })
   
+  observeEvent(input$chooseSecondArray, {
+    if (input$chooseSecondArray == FALSE) {shinyjs::disable("array2") } else {shinyjs::enable("array2") }
+  })
   # array <- reactive({
   #   switch(input$array1)
   # })

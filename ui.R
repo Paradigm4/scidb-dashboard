@@ -9,6 +9,7 @@ arrayList[notR_arrays]}
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
+  shinyjs::useShinyjs(),
   
   # Application title
   titlePanel("SciDB array dashboard"),
