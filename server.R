@@ -34,7 +34,7 @@ shinyServer(function(input, output) {
       stats1$arr = input$array1
       statsC = stats1
     }
-    ggplot(statsC, aes(x = inst, y = scaledCount, group=arr, shape=arr, color = arr)) + geom_point() + 
+    ggplot(statsC, aes(x = inst, y = scaledCount, group=arr, shape=arr, color = arr)) + geom_point(size = 3) + 
       ylim(0, max(2, 1.1*statsC$scaledCount)) +
       theme(legend.text=element_text(size=15),
             legend.position="top")
