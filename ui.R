@@ -5,7 +5,8 @@ library(scidb)
 scidbconnect()
 arrayList = scidbls()
 notR_arrays = !(grepl("R_array+", arrayList, perl=TRUE))
-arrayList[notR_arrays]}
+arrayList[notR_arrays]
+}
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -23,9 +24,8 @@ shinyUI(fluidPage(
       checkboxInput("chooseSecondArray", "Compare with another array", FALSE),
       selectInput("array2", "Compare with another SciDB array:", 
                   choices = arrayList()),
-      helpText("Plot shows distribution of array over SciDB instances", 
-               "Count is scaled w.r.t. minimum",
-               "(unless minimum is zero)")
+      helpText("Distribution of array over SciDB instances"), 
+      helpText("Plot shows counts per instance, or scaled count  (if minimum is non-zero)")
     ),
     mainPanel(
       # verbatimTextOutput("summary"),
