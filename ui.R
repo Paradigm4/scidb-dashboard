@@ -3,7 +3,7 @@ library(shiny)
 arrayList <- function() {
 library(scidb)
 scidbconnect()
-arrayList = scidbls()
+arrayList = iquery("project(filter(list(), temporary=FALSE), name)", return=TRUE)$name
 notR_arrays = !(grepl("R_array+", arrayList, perl=TRUE))
 arrayList[notR_arrays]
 }
