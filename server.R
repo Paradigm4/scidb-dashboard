@@ -1,5 +1,6 @@
 library(shiny)
 library(ggplot2)
+source('~/p4scratch/scidb-dashboard/functions.R')
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   
@@ -17,7 +18,8 @@ shinyServer(function(input, output) {
   output$distPlot <- renderPlot({
     #stats1 = data.frame(inst=c(1:64), count=as.integer(runif(64)*100)) 
     # stats1 = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count)", input$array1), return = TRUE)
-    stats1 = redisGet(sprintf("scidb:%s", input$array1))[[2]]
+    # stats1 = redisGet(sprintf("scidb:%s", input$array1))[[2]]
+    stats1 = get_array_stats(input$array1, input$useCache)
     if (min(stats1$count) == 0) {factor=1} else {factor= min(stats1$count)}
     stats1$scaledCount = stats1$count / factor
     
@@ -27,7 +29,8 @@ shinyServer(function(input, output) {
     if (input$chooseSecondArray){
       #stats2 = data.frame(inst=c(1:64), count=as.integer(runif(64)*100)) 
       # stats2 = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count)", input$array2), return = TRUE)
-      stats2 = redisGet(sprintf("scidb:%s", input$array2))[[2]]
+      # stats2 = redisGet(sprintf("scidb:%s", input$array2))[[2]]
+      stats2 = get_array_stats(input$array2, input$useCache)
       if (min(stats2$count) == 0) {factor2 = 1} else {factor2= min(stats2$count)}
       stats2$scaledCount = stats2$count / factor2
       

@@ -1,15 +1,9 @@
 library(shiny)
 
-arrayList <- function() {
 library(scidb)
 scidbconnect()
 library(rredis)
 redisConnect()
-
-arrayList = iquery("project(filter(list(), temporary=FALSE), name)", return=TRUE)$name
-notR_arrays = !(grepl("R_array+", arrayList, perl=TRUE))
-arrayList[notR_arrays]
-}
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -28,7 +22,8 @@ shinyUI(fluidPage(
       selectInput("array2", "Compare with another SciDB array:", 
                   choices = arrayList()),
       helpText("Distribution of array over SciDB instances"), 
-      helpText("Plot shows counts per instance, or scaled count  (if minimum is non-zero)")
+      helpText("Plot shows counts per instance, or scaled count  (if minimum is non-zero)"),
+      checkboxInput("useCache", "use cache?", FALSE)
     ),
     mainPanel(
       # verbatimTextOutput("summary"),
