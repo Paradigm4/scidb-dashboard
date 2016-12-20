@@ -2,8 +2,7 @@ library(shiny)
 
 library(scidb)
 scidbconnect()
-library(rredis)
-redisConnect()
+source('~/ksen/scidb-dashboard/functions.R')
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -21,9 +20,11 @@ shinyUI(fluidPage(
       checkboxInput("chooseSecondArray", "Compare with another array", FALSE),
       selectInput("array2", "Compare with another SciDB array:", 
                   choices = arrayList()),
-      helpText("Distribution of array over SciDB instances"), 
+      helpText("SciDB array residency"), 
       helpText("Plot shows counts per instance, or scaled count  (if minimum is non-zero)"),
-      checkboxInput("useCache", "use cache?", FALSE)
+      h4("Options"),
+      checkboxInput("scaleCounts", "scale counts when possible", FALSE),
+      checkboxInput("useCache", "use cache", FALSE)
     ),
     mainPanel(
       # verbatimTextOutput("summary"),

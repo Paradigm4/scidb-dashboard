@@ -5,7 +5,7 @@ scidbconnect()
 library(rredis)
 redisConnect()
 
-source('~/p4scratch/scidb-dashboard/functions.R')
+source('~/ksen/scidb-dashboard/functions.R')
 
 # arrayList = iquery("project(filter(list(), temporary=FALSE), name)", return=TRUE)$name
 

@@ -36,5 +36,21 @@ We can also compare the two schema:
 
 <img src="https://cloud.githubusercontent.com/assets/13973052/20946311/31a846ae-bbd8-11e6-8870-0c5ecd915c03.png" width="600" border="2">
 
+# Installation
 
+## R packages
 
+```
+sudo R --slave -e "install.packages('shinyjs')"
+```
+
+## Caching (optional)
+
+If you want to cache array statistics, install Redis as a service. 
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis
+
+And install the R package `rredis`. 
+
+```
+sudo R --slave -e "install.packages('rredis')"
+```

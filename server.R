@@ -1,15 +1,8 @@
 library(shiny)
 library(ggplot2)
-source('~/p4scratch/scidb-dashboard/functions.R')
+source('~/ksen/scidb-dashboard/functions.R')
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-  
-  # Expression that generates a histogram. The expression is
-  # wrapped in a call to renderPlot to indicate that:
-  #
-  #  1) It is "reactive" and therefore should re-execute automatically
-  #     when inputs change
-  #  2) Its output type is a plot
   
   observeEvent(input$chooseSecondArray, {
     if (input$chooseSecondArray == FALSE) {shinyjs::disable("array2") } else {shinyjs::enable("array2") }
@@ -37,7 +30,7 @@ shinyServer(function(input, output) {
       stats2$arr = input$array2
       statsC = rbind(stats1, stats2)
     }  
-    if (factor == 1 || (input$chooseSecondArray & (if(exists('factor2')) {identical(factor2,1)} else {FALSE}))) {
+    if (!(input$scaleCounts) || factor == 1 || (input$chooseSecondArray & (if(exists('factor2')) {identical(factor2,1)} else {FALSE}))) {
       p1 = ggplot(statsC, aes(x = inst, y = count,      group=arr, shape=arr, color = arr)) + 
         ylim(0, max(2, 1.1*statsC$count))
     } else {
