@@ -1,4 +1,5 @@
 library(shiny)
+library(dygraphs)
 tryCatch({
   library(scidb)
   scidbconnect()
