@@ -39,7 +39,8 @@ shinyUI(fluidPage(
     mainPanel(
       # verbatimTextOutput("summary"),
       # plotOutput("distPlot")
-      dygraphOutput("dygraph")
+      dygraphOutput("dygraph"),
+      dygraphOutput("dygraph2")
     )
   )
 ))

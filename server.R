@@ -37,19 +37,22 @@ shinyServer(function(input, output) {
   
   output$dygraph <- renderDygraph({
     stats1 = get_array_stats_array1()
-    if (!input$chooseSecondArray) {
-      dygraph(stats1, main = "Count / Instances") %>%
-        dyAxis("y", label = "Count", valueRange = c(-0.05*max(stats1$count), max(stats1$count)))%>%
-        dySeries("count", label = input$array1)  %>%
-        dyBarChart()
-    } else {
+    dygraph(stats1, main = input$array1, group = "dygraph_barplot") %>%
+      dyAxis("y", label = "Count", valueRange = c(-0.05*max(stats1$count), max(stats1$count)))%>%
+      dyAxis("x", label = "Instance #") %>%
+      dySeries("count", label = "count")  %>%
+      dyBarChart()
+  })
+  
+  output$dygraph2 <- renderDygraph({
+    if (input$chooseSecondArray & (input$array1 != input$array2)) {
       stats2 = get_array_stats_array2()
-      statsC <- data.frame(inst=stats1$inst, stats1=stats1$count, stats2=stats2$count)
-      colnames(statsC)=c("inst", input$array1, input$array2)
-      dygraph(statsC) %>%
-        dyAxis("y", label = "Count", valueRange = c(-0.05*max(stats1$count), max(stats1$count)))%>%
-        dyMultiColumn()
-    }
+      dygraph(stats2, main = input$array2, group = "dygraph_barplot") %>%
+        dyAxis("y", label = "Count", valueRange = c(-0.05*max(stats2$count), max(stats2$count)))%>%
+        dyAxis("x", label = "Instance #")%>%
+        dySeries("count", label = "count")  %>%
+        dyBarChart()    
+      } else { return(NULL) }
   })
   
   output$summary <- renderPrint({
