@@ -26,7 +26,8 @@ get_array_stats = function(array, useCache = TRUE) {
     # print(proc.time()-t1)
   } else {
     # t1 = proc.time(); 
-    x2 = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count)", array), return = TRUE); 
+    latest_array_stats = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count)", array), return = TRUE); 
     # print(proc.time()-t1)
   }
+  return(latest_array_stats[, c("inst", "count")])
 }
