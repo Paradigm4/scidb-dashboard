@@ -1,7 +1,16 @@
 library(shiny)
-
-library(scidb)
-scidbconnect()
+tryCatch({
+  library(scidb)
+  scidbconnect()
+}, error = function(e){
+  print(e)
+})
+try(
+  {
+    library(rredis)
+    redisConnect()
+  }
+)
 source('~/ksen/scidb-dashboard/functions.R')
 
 # Define UI for application that draws a histogram

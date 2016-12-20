@@ -16,3 +16,4 @@ for (array in arrayList()){
   
   redisSet(sprintf("scidb:%s", array), list(latest_version, latest_array_stats))
 }
+redisClose()
