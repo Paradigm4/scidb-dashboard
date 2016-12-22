@@ -8,12 +8,7 @@ dyBarChart <- function(dygraph) {
             path = system.file("examples/plotters/barchart.js",
                                package = "dygraphs"))
 }
-dyMultiColumn <- function(dygraph) {
-  dyPlotter(dygraph = dygraph,
-            name = "MultiColumn",
-            path = system.file("examples/plotters/multicolumn.js",
-                               package = "dygraphs"))
-}
+
 shinyServer(function(input, output) {
   
   observeEvent(input$chooseSecondArray, {
@@ -38,7 +33,7 @@ shinyServer(function(input, output) {
   output$dygraph <- renderDygraph({
     stats1 = get_array_stats_array1()
     dygraph(stats1, main = input$array1, group = "dygraph_barplot") %>%
-      dyAxis("y", label = "Count", valueRange = c(-0.05*max(stats1$count), max(stats1$count)))%>%
+      dyAxis("y", label = colnames(stats1)[2], valueRange = c(-0.05*max(stats1$count), max(stats1$count)))%>%
       dyAxis("x", label = "Instance #") %>%
       dySeries("count", label = "count")  %>%
       dyBarChart()
@@ -48,7 +43,7 @@ shinyServer(function(input, output) {
     if (input$chooseSecondArray & (input$array1 != input$array2)) {
       stats2 = get_array_stats_array2()
       dygraph(stats2, main = input$array2, group = "dygraph_barplot") %>%
-        dyAxis("y", label = "Count", valueRange = c(-0.05*max(stats2$count), max(stats2$count)))%>%
+        dyAxis("y", label = colnames(stats2)[2], valueRange = c(-0.05*max(stats2$count), max(stats2$count)))%>%
         dyAxis("x", label = "Instance #")%>%
         dySeries("count", label = "count")  %>%
         dyBarChart()    
@@ -58,11 +53,4 @@ shinyServer(function(input, output) {
   output$summary <- renderPrint({
     input$array1
   })
-  
-  # array <- reactive({
-  #   switch(input$array1)
-  # })
-  
-  
-  
 })

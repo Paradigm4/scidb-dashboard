@@ -37,8 +37,6 @@ shinyUI(fluidPage(
       checkboxInput("useCache", "use cache", FALSE)
     ),
     mainPanel(
-      # verbatimTextOutput("summary"),
-      # plotOutput("distPlot")
       dygraphOutput("dygraph"),
       dygraphOutput("dygraph2")
     )
