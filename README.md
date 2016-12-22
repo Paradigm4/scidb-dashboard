@@ -1,46 +1,32 @@
 # scidb-dashboard
 Dashboard for visualizing data-skew in SciDB arrays
 
-The dashboard allows the end-user to visualize the distribution through a simple user-interface. See the demo below to get an idea of how a simple UI can help users debug data skew problems in SciDB. 
+The dashboard allows the end-user to visualize the SciDB array distribution across instances through a simple user-interface. The dashboard also outputs the array-size in human readable format.
 
-# Quick demo
+# Dashboard screenshots
 
-## Step 1
+The say a picture is worth a thousand words, so here a few thousands words about the UI:
 
-Image below shows the distribution of a SciDB array that is resident on only one instance (!). All other instances have a count of zero. 
+<img src="https://cloud.githubusercontent.com/assets/13973052/21442318/372a1a68-c86b-11e6-882d-6a664ae6f11c.png" width="600" border="2">
+
+Image shows the distribution of a SciDB array that is resident on only one instance (!). All other instances have a count of zero. 
 **PS**: No harm done here, this is probably a small array.
 
-<img src="https://cloud.githubusercontent.com/assets/13973052/20946265/0cc39fdc-bbd8-11e6-9dce-ac5b2a362c18.png" width="600" border="2">
 
-## Step 2
+<img src="https://cloud.githubusercontent.com/assets/13973052/21442326/3ecf41da-c86b-11e6-847a-67631f9d49cd.png" width="600" border="2">
 
-Let us look at an important array -- the genotype array for variant data from the 1000 genomes project
+This is an important array -- the genotype array for variant data from the 1000 genomes project. Also note how I used the scaling option. Seems to be pretty well distributed. 
 
-<img src="https://cloud.githubusercontent.com/assets/13973052/20946277/18c5ef38-bbd8-11e6-8abd-28828db75612.png" width="600" border="2">
+<img src="https://cloud.githubusercontent.com/assets/13973052/21442327/413f39d4-c86b-11e6-9f98-b133cd8d5ab3.png" width="600" border="2">
 
-Note that the count is scaled to the minimum in this case. 
-
-Looks like the data skew is 2x! We can do much better.
-
-## Step 3
-
-Now, the same data but arranged via a different schema. 
-
-<img src="https://cloud.githubusercontent.com/assets/13973052/20946299/27f25a46-bbd8-11e6-8ff7-cd7f05ab363e.png" width="600" border="2">
-
-This time, the data skew is much much better. 
-
-## Step 4
-
-We can also compare the two schema:
-
-<img src="https://cloud.githubusercontent.com/assets/13973052/20946311/31a846ae-bbd8-11e6-8870-0c5ecd915c03.png" width="600" border="2">
+Now comparing two arrays -- the second array is not that well distributed. But it is small, so still OK to have. 
 
 # Installation
 
 ## R packages
 
 ```
+sudo R --slave -e "install.packages('shiny')"
 sudo R --slave -e "install.packages('shinyjs')"
 ```
 
