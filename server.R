@@ -9,6 +9,30 @@ dyBarChart <- function(dygraph) {
                                package = "dygraphs"))
 }
 
+scaleStatsIfPossible = function(stats1, scaleCounts){
+  if (min(stats1$count) == 0 || !(scaleCounts)) {
+    return(stats1[, c("inst", "count")])
+  } else {
+    factor= min(stats1$count)
+    stats1$scaled.count = stats1$count / factor
+    return(stats1[, c("inst", "scaled.count")])
+  }
+}
+
+plotArrayDist = function(stats1, plotName){
+  isScaled = (colnames(stats1)[2] == "scaled.count")
+  p1 = dygraph(stats1, main = plotName, group = "dygraph_barplot") 
+  if (!isScaled) {
+    p1 = p1 %>% dyAxis("y", label = colnames(stats1)[2], valueRange = c(-0.05*max(stats1[,2]), 1.05*max(stats1[,2])))
+  } else {
+    p1 = p1 %>% dyAxis("y", label = colnames(stats1)[2], valueRange = c(0.95, 1.05*max(max(stats1[,2]), 2)))
+  }
+  p1 = p1 %>% dyAxis("x", label = "Instance #") %>%
+    dySeries(colnames(stats1)[2], label = "count")  %>%
+    dyBarChart()
+  p1
+}
+
 shinyServer(function(input, output) {
   
   observeEvent(input$chooseSecondArray, {
@@ -17,36 +41,23 @@ shinyServer(function(input, output) {
 
   get_array_stats_array1 <- reactive({
     stats1 = get_array_stats(input$array1, input$useCache)
-    if (min(stats1$count) == 0) {factor=1} else {factor= min(stats1$count)}
-    stats1$scaledCount = stats1$count / factor
-    return(stats1[, c("inst", "count")])
+    scaleStatsIfPossible(stats1, input$scaleCounts)
   })
 
   get_array_stats_array2 <- reactive({
     stats2 = get_array_stats(input$array2, input$useCache)
-    if (min(stats2$count) == 0) {factor2 = 1} else {factor2= min(stats2$count)}
-    stats2$scaledCount = stats2$count / factor2
-    
-    return(stats2[, c("inst", "count")])
+    scaleStatsIfPossible(stats2, input$scaleCounts)
   })
   
   output$dygraph <- renderDygraph({
     stats1 = get_array_stats_array1()
-    dygraph(stats1, main = input$array1, group = "dygraph_barplot") %>%
-      dyAxis("y", label = colnames(stats1)[2], valueRange = c(-0.05*max(stats1$count), max(stats1$count)))%>%
-      dyAxis("x", label = "Instance #") %>%
-      dySeries("count", label = "count")  %>%
-      dyBarChart()
+    plotArrayDist(stats1, input$array1)
   })
   
   output$dygraph2 <- renderDygraph({
     if (input$chooseSecondArray & (input$array1 != input$array2)) {
       stats2 = get_array_stats_array2()
-      dygraph(stats2, main = input$array2, group = "dygraph_barplot") %>%
-        dyAxis("y", label = colnames(stats2)[2], valueRange = c(-0.05*max(stats2$count), max(stats2$count)))%>%
-        dyAxis("x", label = "Instance #")%>%
-        dySeries("count", label = "count")  %>%
-        dyBarChart()    
+      plotArrayDist(stats2, input$array2)
       } else { return(NULL) }
   })
   
