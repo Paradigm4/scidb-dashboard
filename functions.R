@@ -20,14 +20,14 @@ get_array_stats = function(array, useCache = TRUE) {
     if (latest_version_in_db == latest_version_in_cache) {
       latest_array_stats = latest_cache[[2]]
     } else {
-      latest_array_stats = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count)", array), return = TRUE)
+      latest_array_stats = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count, bytes)", array), return = TRUE)
       redisSet(sprintf(key, list(latest_version_in_db, latest_array_stats)))
     }
     # print(proc.time()-t1)
   } else {
     # t1 = proc.time(); 
-    latest_array_stats = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count)", array), return = TRUE); 
+    latest_array_stats = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count, bytes)", array), return = TRUE); 
     # print(proc.time()-t1)
   }
-  return(latest_array_stats[, c("inst", "count")])
+  return(latest_array_stats[, c("inst", "count", "bytes")])
 }

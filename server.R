@@ -11,15 +11,15 @@ dyBarChart <- function(dygraph) {
 
 scaleStatsIfPossible = function(stats1, scaleCounts){
   if (min(stats1$count) == 0 || !(scaleCounts)) {
-    return(stats1[, c("inst", "count")])
+    return(stats1[, c("inst", "count", "bytes")])
   } else {
     factor= min(stats1$count)
     stats1$scaled.count = stats1$count / factor
-    return(stats1[, c("inst", "scaled.count")])
+    return(stats1[, c("inst", "scaled.count", "bytes")])
   }
 }
 
-plotArrayDist = function(stats1, plotName){
+plotArrayDist = function(stats1, plotName, color){
   isScaled = (colnames(stats1)[2] == "scaled.count")
   p1 = dygraph(stats1, main = plotName, group = "dygraph_barplot") 
   if (!isScaled) {
@@ -29,7 +29,8 @@ plotArrayDist = function(stats1, plotName){
   }
   p1 = p1 %>% dyAxis("x", label = "Instance #") %>%
     dySeries(colnames(stats1)[2], label = "count")  %>%
-    dyBarChart()
+    dyBarChart() %>%
+    dyOptions(colors = color)
   p1
 }
 
@@ -50,14 +51,20 @@ shinyServer(function(input, output) {
   })
   
   output$dygraph <- renderDygraph({
-    stats1 = get_array_stats_array1()
-    plotArrayDist(stats1, input$array1)
+    stats = get_array_stats_array1()
+    plotName = sprintf("%s (%s)", 
+                       input$array1, 
+                       utils:::format.object_size(sum(stats$bytes), "auto") )
+    plotArrayDist(stats[, c(1,2)], plotName, color = RColorBrewer::brewer.pal(3, "Set2")[3])
   })
   
   output$dygraph2 <- renderDygraph({
     if (input$chooseSecondArray & (input$array1 != input$array2)) {
-      stats2 = get_array_stats_array2()
-      plotArrayDist(stats2, input$array2)
+      stats = get_array_stats_array2()
+      plotName = sprintf("%s (%s)", 
+                         input$array2, 
+                         utils:::format.object_size(sum(stats$bytes), "auto") )
+      plotArrayDist(stats[, c(1,2)], plotName, color = RColorBrewer::brewer.pal(3, "Set2")[1])
       } else { return(NULL) }
   })
   
