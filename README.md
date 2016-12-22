@@ -3,23 +3,26 @@ Dashboard for visualizing data-skew in SciDB arrays
 
 The dashboard allows the end-user to visualize the SciDB array distribution across instances through a simple user-interface. The dashboard also outputs the array-size in human readable format.
 
-# Dashboard screenshots
-
-The say a picture is worth a thousand words, so here a few thousands words about the UI:
+The say a picture is worth a thousand words, so here a few thousands words about the UI.
 
 <img src="https://cloud.githubusercontent.com/assets/13973052/21442318/372a1a68-c86b-11e6-882d-6a664ae6f11c.png" width="600" border="2">
+
+## 1
 
 Image shows the distribution of a SciDB array that is resident on only one instance (!). All other instances have a count of zero. 
 **PS**: No harm done here, this is probably a small array.
 
+## 2
 
-<img src="https://cloud.githubusercontent.com/assets/13973052/21442326/3ecf41da-c86b-11e6-847a-67631f9d49cd.png" width="600" border="2">
+<img src="https://cloud.githubusercontent.com/assets/13973052/21442321/3b04be4a-c86b-11e6-92ee-fd571784720e.png" width="600" border="2">
 
-This is an important array -- the genotype array for variant data from the 1000 genomes project. Also note how I used the scaling option. Seems to be pretty well distributed. 
+This is an important array -- the genotype array for variant data from the 1000 genomes project (20 GB). Seems to be pretty well distributed. 
+
+## 3
 
 <img src="https://cloud.githubusercontent.com/assets/13973052/21442327/413f39d4-c86b-11e6-9f98-b133cd8d5ab3.png" width="600" border="2">
 
-Now comparing two arrays -- the second array is not that well distributed. But it is small, so still OK to have. 
+Now comparing two arrays -- the second array is not that well distributed. Also note how I used the scaling option. 
 
 # Installation
 
