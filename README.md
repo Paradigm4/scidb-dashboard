@@ -1,7 +1,5 @@
 # scidb-dashboard
-Dashboard for visualizing data-skew in SciDB arrays
-
-The dashboard allows the end-user to visualize the SciDB array distribution across instances through a simple user-interface. The dashboard also outputs the array-size in human readable format.
+Dashboard for visualizing SciDB array distribution across instances. The dashboard also outputs the array-size on disk in human readable format.
 
 The say a picture is worth a thousand words, so here a few thousands words about the UI.
 
