@@ -5,20 +5,20 @@ The dashboard allows the end-user to visualize the SciDB array distribution acro
 
 The say a picture is worth a thousand words, so here a few thousands words about the UI.
 
-<img src="https://cloud.githubusercontent.com/assets/13973052/21442318/372a1a68-c86b-11e6-882d-6a664ae6f11c.png" width="600" border="2">
+### 1
 
-## 1
+<img src="https://cloud.githubusercontent.com/assets/13973052/21442318/372a1a68-c86b-11e6-882d-6a664ae6f11c.png" width="600" border="2">
 
 Image shows the distribution of a SciDB array that is resident on only one instance (!). All other instances have a count of zero. 
 **PS**: No harm done here, this is probably a small array.
 
-## 2
+### 2
 
 <img src="https://cloud.githubusercontent.com/assets/13973052/21442321/3b04be4a-c86b-11e6-92ee-fd571784720e.png" width="600" border="2">
 
-This is an important array -- the genotype array for variant data from the 1000 genomes project (20 GB). Seems to be pretty well distributed. 
+This is an important array -- the genotype array for variant data from the 1000 genomes project (20 GB on disk). Seems to be pretty well distributed. 
 
-## 3
+### 3
 
 <img src="https://cloud.githubusercontent.com/assets/13973052/21442327/413f39d4-c86b-11e6-9f98-b133cd8d5ab3.png" width="600" border="2">
 
