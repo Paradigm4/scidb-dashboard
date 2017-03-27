@@ -1,6 +1,6 @@
 library(shiny)
 library(ggplot2)
-source('~/ksen/scidb-dashboard/functions.R')
+source('functions.R')
 # Define server logic required to draw a histogram
 dyBarChart <- function(dygraph) {
   dyPlotter(dygraph = dygraph,

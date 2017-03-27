@@ -1,5 +1,5 @@
 arrayList <- function() {
-  arrayList = iquery("project(filter(list(), temporary=FALSE), name)", return=TRUE)$name
+  arrayList = iquery(db, "project(filter(list(), temporary=FALSE), name)", return=TRUE)$name
   notR_arrays = !(grepl("R_array+", arrayList, perl=TRUE))
   arrayList[notR_arrays]
 }
@@ -20,13 +20,13 @@ get_array_stats = function(array, useCache = TRUE) {
     if (latest_version_in_db == latest_version_in_cache) {
       latest_array_stats = latest_cache[[2]]
     } else {
-      latest_array_stats = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count, bytes)", array), return = TRUE)
+      latest_array_stats = iquery(db, sprintf("project(summarize(%s, 'per_instance=1'), count, bytes)", array), return = TRUE)
       redisSet(sprintf(key, list(latest_version_in_db, latest_array_stats)))
     }
     # print(proc.time()-t1)
   } else {
     # t1 = proc.time(); 
-    latest_array_stats = iquery(sprintf("project(summarize(%s, 'per_instance=1'), count, bytes)", array), return = TRUE); 
+    latest_array_stats = iquery(db, sprintf("project(summarize(%s, 'per_instance=1'), count, bytes)", array), return = TRUE); 
     # print(proc.time()-t1)
   }
   return(latest_array_stats[, c("inst", "count", "bytes")])

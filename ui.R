@@ -2,7 +2,7 @@ library(shiny)
 library(dygraphs)
 tryCatch({
   library(scidb)
-  scidbconnect()
+  db = scidbconnect(username = "root", password = "Paradigm4", port = 8083, protocol = "https")
 }, error = function(e){
   print(e)
 })
@@ -12,7 +12,7 @@ try(
     redisConnect()
   }
 )
-source('~/ksen/scidb-dashboard/functions.R')
+source('functions.R')
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
