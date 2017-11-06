@@ -4,6 +4,11 @@ arrayList <- function() {
   arrayList[notR_arrays]
 }
 
+nmspList <- function() {
+  iquery(db, "list('namespaces')", return=TRUE)$name
+}
+
+
 get_array_stats = function(array, useCache = TRUE) {
   if (useCache){
     query = sprintf("project(versions(%s), version_id)", array)
@@ -20,13 +25,13 @@ get_array_stats = function(array, useCache = TRUE) {
     if (latest_version_in_db == latest_version_in_cache) {
       latest_array_stats = latest_cache[[2]]
     } else {
-      latest_array_stats = iquery(db, sprintf("project(summarize(%s, 'per_instance=1'), count, bytes)", array), return = TRUE)
+      latest_array_stats = iquery(db, sprintf("project(summarize(%s, by_instance:true), count, bytes)", array), return = TRUE)
       redisSet(sprintf(key, list(latest_version_in_db, latest_array_stats)))
     }
     # print(proc.time()-t1)
   } else {
     # t1 = proc.time(); 
-    latest_array_stats = iquery(db, sprintf("project(summarize(%s, 'per_instance=1'), count, bytes)", array), return = TRUE); 
+    latest_array_stats = iquery(db, sprintf("project(summarize(%s, by_instance:true), count, bytes)", array), return = TRUE); 
     # print(proc.time()-t1)
   }
   return(latest_array_stats[, c("inst", "count", "bytes")])

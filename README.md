@@ -29,6 +29,7 @@ Now comparing two arrays -- the second array is not that well distributed. Also 
 ```
 sudo R --slave -e "install.packages('shiny')"
 sudo R --slave -e "install.packages('shinyjs')"
+sudo R --slave -e "install.packages('dygraphs')"
 ```
 
 ## Caching (optional)

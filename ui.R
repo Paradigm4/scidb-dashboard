@@ -1,8 +1,9 @@
 library(shiny)
 library(dygraphs)
+db <<- NULL
 tryCatch({
   library(scidb)
-  db = scidbconnect(username = "root", password = "Paradigm4", port = 8083, protocol = "https")
+  db <<- scidbconnect(username = "root", password = "Paradigm4", port = 8083, protocol = "https")
 }, error = function(e){
   print(e)
 })
@@ -25,11 +26,14 @@ shinyUI(fluidPage(
   sidebarLayout(
     # Show a plot of the generated distribution
     sidebarPanel(
+      selectInput("nmsp_list", "Choose a namespace:", 
+                  choices = nmspList(),
+                  selected = 'public'),
       selectInput("array1", "Choose a SciDB array:", 
                   choices = arrayList()),
       checkboxInput("chooseSecondArray", "Compare with another array", FALSE),
       selectInput("array2", "Compare with another SciDB array:", 
-                  choices = arrayList()),
+                  choices = NULL),
       helpText("SciDB array residency"), 
       helpText("Plot shows counts per instance, or scaled count  (if minimum is non-zero)"),
       h4("Options"),
