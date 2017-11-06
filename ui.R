@@ -30,19 +30,19 @@ shinyUI(fluidPage(
                   choices = nmspList(),
                   selected = 'public'),
       selectInput("array1", "Choose a SciDB array:", 
-                  choices = arrayList()),
-      checkboxInput("chooseSecondArray", "Compare with another array", FALSE),
-      selectInput("array2", "Compare with another SciDB array:", 
                   choices = NULL),
+      # checkboxInput("chooseSecondArray", "Compare with another array", FALSE),
+      # selectInput("array2", "Compare with another SciDB array:", 
+                  # choices = NULL),
       helpText("SciDB array residency"), 
       helpText("Plot shows counts per instance, or scaled count  (if minimum is non-zero)"),
       h4("Options"),
-      checkboxInput("scaleCounts", "scale counts when possible", FALSE),
-      checkboxInput("useCache", "use cache", FALSE)
+      checkboxInput("scaleCounts", "scale counts when possible", FALSE)
+      # checkboxInput("useCache", "use cache", FALSE)
     ),
     mainPanel(
-      dygraphOutput("dygraph"),
-      dygraphOutput("dygraph2")
+      dygraphOutput("dygraph")
+      # dygraphOutput("dygraph2")
     )
   )
 ))

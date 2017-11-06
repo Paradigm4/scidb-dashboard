@@ -34,21 +34,26 @@ plotArrayDist = function(stats1, plotName, color){
   p1
 }
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   
-  observeEvent(input$chooseSecondArray, {
-    if (input$chooseSecondArray == FALSE) {shinyjs::disable("array2") } else {shinyjs::enable("array2") }
+  # observeEvent(input$chooseSecondArray, {
+  #   if (input$chooseSecondArray == FALSE) {shinyjs::disable("array2") } else {shinyjs::enable("array2") }
+  # })
+  
+  observeEvent(input$nmsp_list, {
+    updateSelectInput(session, inputId = "array1", choices = arrayList(nmsp = input$nmsp_list))
   })
 
   get_array_stats_array1 <- reactive({
-    stats1 = get_array_stats(input$array1, input$useCache)
+    arrayname = paste0(input$nmsp_list, ".", input$array1)
+    stats1 = get_array_stats(arrayname, useCache = FALSE)
     scaleStatsIfPossible(stats1, input$scaleCounts)
   })
 
-  get_array_stats_array2 <- reactive({
-    stats2 = get_array_stats(input$array2, input$useCache)
-    scaleStatsIfPossible(stats2, input$scaleCounts)
-  })
+  # get_array_stats_array2 <- reactive({
+  #   stats2 = get_array_stats(input$array2, input$useCache)
+  #   scaleStatsIfPossible(stats2, input$scaleCounts)
+  # })
   
   output$dygraph <- renderDygraph({
     stats = get_array_stats_array1()
@@ -58,15 +63,15 @@ shinyServer(function(input, output) {
     plotArrayDist(stats[, c(1,2)], plotName, color = RColorBrewer::brewer.pal(3, "Set2")[3])
   })
   
-  output$dygraph2 <- renderDygraph({
-    if (input$chooseSecondArray & (input$array1 != input$array2)) {
-      stats = get_array_stats_array2()
-      plotName = sprintf("%s (%s)", 
-                         input$array2, 
-                         utils:::format.object_size(sum(stats$bytes), "auto") )
-      plotArrayDist(stats[, c(1,2)], plotName, color = RColorBrewer::brewer.pal(3, "Set2")[1])
-      } else { return(NULL) }
-  })
+  # output$dygraph2 <- renderDygraph({
+  #   if (input$chooseSecondArray & (input$array1 != input$array2)) {
+  #     stats = get_array_stats_array2()
+  #     plotName = sprintf("%s (%s)", 
+  #                        input$array2, 
+  #                        utils:::format.object_size(sum(stats$bytes), "auto") )
+  #     plotArrayDist(stats[, c(1,2)], plotName, color = RColorBrewer::brewer.pal(3, "Set2")[1])
+  #     } else { return(NULL) }
+  # })
   
   output$summary <- renderPrint({
     input$array1

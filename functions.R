@@ -1,5 +1,6 @@
-arrayList <- function() {
-  arrayList = iquery(db, "project(filter(list(), temporary=FALSE), name)", return=TRUE)$name
+arrayList <- function(nmsp) {
+  db2 = scidb::scidb_prefix(db, paste0("set_namespace('", nmsp, "')"))
+  arrayList = iquery(db2, "project(filter(list(), temporary=FALSE), name)", return=TRUE)$name
   notR_arrays = !(grepl("R_array+", arrayList, perl=TRUE))
   arrayList[notR_arrays]
 }
